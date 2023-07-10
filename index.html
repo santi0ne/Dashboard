@@ -229,7 +229,7 @@
           </ul>
           <ul class="header-nav ms-3">
             <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <div class="avatar avatar-md"><img class="avatar-img" src="assets/img/avatars/8.jpg" alt="user@email.com"></div>
+                <div class="avatar avatar-md"><img class="avatar-img" src="assets/img/avatars/cristiano.png" alt="cristianoronaldo@email.com"></div>
               </a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 <div class="dropdown-header bg-light py-2">
@@ -394,10 +394,11 @@
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
-                  <h4 class="card-title mb-0">Traffic</h4>
+                  <h4 class="card-title mb-0">Line Graph</h4>
                   <div class="small text-medium-emphasis">January - July 2022</div>
                 </div>
                 <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
+                  <!--
                   <div class="btn-group btn-group-toggle mx-3" data-coreui-toggle="buttons">
                     <input class="btn-check" id="option1" type="radio" name="options" autocomplete="off">
                     <label class="btn btn-outline-secondary"> Day</label>
@@ -406,6 +407,7 @@
                     <input class="btn-check" id="option3" type="radio" name="options" autocomplete="off">
                     <label class="btn btn-outline-secondary"> Year</label>
                   </div>
+                -->
                   <button class="btn btn-primary" type="button">
                     <svg class="icon">
                       <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cloud-download"></use>
@@ -415,6 +417,34 @@
               </div>
               <div class="c-chart-wrapper" >
                 <canvas id="myChart"></canvas>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h4 class="card-title mb-0">Bar Graph</h4>
+                  <div class="small text-medium-emphasis">January - July 2022</div>
+                </div>
+                <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
+                  <!--
+                  <div class="btn-group btn-group-toggle mx-3" data-coreui-toggle="buttons">
+                    <input class="btn-check" id="option1" type="radio" name="options" autocomplete="off">
+                    <label class="btn btn-outline-secondary"> Day</label>
+                    <input class="btn-check" id="option2" type="radio" name="options" autocomplete="off" checked="">
+                    <label class="btn btn-outline-secondary active"> Month</label>
+                    <input class="btn-check" id="option3" type="radio" name="options" autocomplete="off">
+                    <label class="btn btn-outline-secondary"> Year</label>
+                  </div>
+                -->
+                  <button class="btn btn-primary" type="button">
+                    <svg class="icon">
+                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cloud-download"></use>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="c-chart-wrapper" >
+                <canvas id="myBarChart"></canvas>
               </div>
             </div>
             <div class="card-footer">

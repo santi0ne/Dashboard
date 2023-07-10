@@ -3,29 +3,61 @@
 
 let plot = (data) => {
     const ctx = document.getElementById('myChart'); /* referencia al elemento HTML */
+    const barCtx = document.getElementById('myBarChart');
+
+    /* FUNCION QUE GENERA CODIGO DE COLORES HEX ALEATORIAMENTE */
+    const generateRandomColor = () => {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      };
+      
+      const colors = Array.from({ length: data.hourly.time.length }, () =>
+        generateRandomColor()
+      );
 
     const dataset = {
         labels: data.hourly.time, /* ETIQUETA DE DATOS */
-        datasets: [{
-            label: 'Temperatura semanal', /* ETIQUETA DEL GRÁFICO */
-            data: data.hourly.temperature_2m, /* ARREGLO DE DATOS */
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-        }]
+        datasets: [
+            {
+                label: 'Temperatura semanal', /* ETIQUETA DEL GRÁFICO */
+                data: data.hourly.temperature_2m, /* ARREGLO DE DATOS */
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1,
+                backgroundColor: colors, // Cambia los colores aquí del grafico de barras
+                pointBackgroundColor: 'rgba(75, 192, 192, 1)' // colores estaticos en los puntos del grafico de linea
+            }
+        ]
     };
 
-    /* conf del grafico */
+    /* conf del grafico de linea */
     const config = {
         type: 'line',
         data: dataset,
     };
 
-    /* instanciacion del grafico */
+    /* conf del grafico de barras */
+    const barConfig = {
+        type: 'bar',
+        data: dataset,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            },
+        }
+    };
+
+    /* instanciacion del grafico de linea */
     const chart = new Chart(ctx, config); /* ctx -> referencia al HTML */
 
-    /* Grafico de Barras */
-
+    /* instanciacion del grafico de linea */
+    const barChart = new Chart(barCtx, barConfig);
 }
 
 /* cargar datos */
