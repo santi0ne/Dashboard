@@ -1,3 +1,10 @@
+
+.custom-size {
+  width: 33px;  /* Ancho deseado */
+  height: auto; /* Altura deseada */
+}
+
+
 [data-simplebar] {
   position: relative;
   flex-direction: column;

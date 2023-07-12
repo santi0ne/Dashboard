@@ -1,4 +1,3 @@
-
 /* Funcion flecha plot con el parametro data */
 
 let plot = (data) => {
@@ -63,6 +62,7 @@ let plot = (data) => {
 /* cargar datos */
 
 let load = (data) => {
+    
     let latitude = data['latitude'];
     let latitudeHTML = document.getElementById('latitud');
     latitudeHTML.textContent = latitude;
@@ -71,16 +71,56 @@ let load = (data) => {
     let longitudeHTML = document.getElementById('longitud');
     longitudeHTML.textContent = longitude;
 
-    let temperature = data['timezone_abbreviation'];
-    let temperatureHTML = document.getElementById('temperatura');
+    let temperature = data['timezone'];
+    let temperatureHTML = document.getElementById('ubication');
     temperatureHTML.textContent = temperature;
 
-    let timezone = data['timezone'];
+    let timezone = data['timezone_abbreviation'];
     let timezoneHTML = document.getElementById('time-zone');
-    timezoneHTML.textContent = timezone;
+    timezoneHTML.textContent = 'GTM'+timezone;
 
-     /* llamada a funcion plot */
-     plot(data)
+    const tiempoTranscurrido = Date.now()
+    const hoy = new Date(tiempoTranscurrido)
+    let date=hoy.toISOString().substring(0,10)
+    let dateHTML=document.getElementById('nowFecha')
+    dateHTML.textContent=date
+
+    /* llamada a funcion plot */
+    plot(data)
+
+}
+
+
+let loadCurrent = (data) => {
+
+    const tiempoTranscurrido = Date.now()
+    const hoy = new Date(tiempoTranscurrido)
+    let date=hoy.toISOString().substring(0,10)
+
+    let fechas=data.daily.time;
+    
+    function comparar(fecha){
+        if(fecha==date) fechaActual=fechas.indexOf(fecha)
+    }
+
+    fechas.forEach(element => comparar(element))
+
+    let maxTemp=data.daily.temperature_2m_max[fechaActual];
+    let maxTempHTML=document.getElementById('atemperatura');
+    maxTempHTML.textContent=maxTemp;
+    
+
+    let minTemp=data.daily.temperature_2m_min[fechaActual]
+    let minTempHTML=document.getElementById('btemperatura');
+    minTempHTML.textContent=minTemp+' °C'
+
+    let sunset=data.daily.sunset[fechaActual]
+    let sunsetHTML=document.getElementById('sunset');
+    sunsetHTML.textContent=sunset.substring(11)+ 'PM'
+  
+    let windspeed=data.daily.windspeed_10m_max[fechaActual]
+    let windspeedHTML=document.getElementById('windspeed');
+    windspeedHTML.textContent=windspeed+' km/h'
 
 }
 
@@ -95,8 +135,7 @@ let loadInocar = () => {
             const parser = new DOMParser();
             const xml = parser.parseFromString(data, "text/html");
             let contenedorHTML = document.getElementById('table-container');
-            
-            let contenedorMareas = xml.getElementsByClassName('container-fluid')[0];
+            let contenedorMareas = xml.getElementsByTagName('div')[0];
             contenedorHTML.innerHTML = contenedorMareas.innerHTML;
             /*console.log(xml);*/
         })
@@ -109,11 +148,12 @@ let loadInocar = () => {
         let meteo = localStorage.getItem('meteo');
 
         if(meteo == null){
-            let URL = 'https://api.open-meteo.com/v1/forecast?latitude=-2.20&longitude=-79.89&hourly=temperature_2m&daily=uv_index_max&timezone=auto';
+            let URL ='https://api.open-meteo.com/v1/forecast?latitude=-2.20&longitude=-79.89&hourly=temperature_2m,relativehumidity_2m,precipitation_probability&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,windspeed_10m_max,winddirection_10m_dominant&timezone=auto';
             fetch(URL)
                 .then(response => response.json())
                 .then(data => {
                     load(data)
+                    
 
                     /* GUARDAR DATA EN MEMORIA */
                     localStorage.setItem("meteo", JSON.stringify(data))
@@ -125,6 +165,7 @@ let loadInocar = () => {
         }
         
         loadInocar();
+        loadCurrent(data);
     }
 )();
 
